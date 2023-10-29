@@ -1,14 +1,12 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
-
-# dependencies
+# 依存関係
 node_modules/
 
-# Expo
+# Expo関連
 .expo/
 dist/
 web-build/
 
-# Native
+# ネイティブ関連
 *.orig.*
 *.jks
 *.p8
@@ -16,20 +14,33 @@ web-build/
 *.key
 *.mobileprovision
 
-# Metro
+# Metro関連
 .metro-health-check*
 
-# debug
+# デバッグ関連
 npm-debug.*
 yarn-debug.*
 yarn-error.*
 
-# macOS
+# macOS関連
 .DS_Store
-*.pem
 
-# local env files
+# 環境変数
+.env
 .env*.local
 
-# typescript
+# TypeScript関連
 *.tsbuildinfo
+
+# IDE設定
+.idea/
+.vscode/
+
+# ビルド成果物
+build/
+
+# ソースマップ
+*.map
+
+# テスト関連
+coverage/
