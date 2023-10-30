@@ -11,10 +11,12 @@ news-app/
 │   │   ├── molecules/
 │   │   ├── organisms/
 │   │   └── templates/
-│   ├── screens/
+│   ├── hocks/
 │   ├── navigation/
+│   ├── screens/
 │   ├── services/
 │   ├── state/
+│   ├── store/
 │   └── utils/
 ├── App.tsx
 ├── app.json

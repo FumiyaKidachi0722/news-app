@@ -1,63 +1,23 @@
-import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+// src/screens/ArticleScreen.tsx
+
 import { ClipButton } from 'components/atoms/ClipButton';
+import { useClip } from 'hooks/useClip';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'store';
-import { addClip, deleteClip } from 'store/userSlice';
+import { ArticleScreenProps } from 'utils/types';
 
-interface Article {
-  author: string;
-  content: string | null;
-  description: string;
-  publishedAt: string;
-  source: {
-    id: string | null;
-    name: string;
-  };
-  title: string;
-  url: string;
-  urlToImage: string;
-}
-
-type RootStackParamList = {
-  Home: undefined;
-  Article: { article: Article };
-};
-
-type ArticleScreenRouteProp = RouteProp<RootStackParamList, 'Article'>;
-
-type ArticleScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Article'
->;
-
-interface ArticleScreenProps {
-  route: ArticleScreenRouteProp;
-  navigation: ArticleScreenNavigationProp;
-}
-
+/**
+ * 記事詳細画面
+ * @param route ルーティング情報
+ */
 export const ArticleScreen: React.FC<ArticleScreenProps> = ({ route }) => {
   const { article } = route.params;
-  const dispatch = useDispatch();
-
-  const clips = useSelector((state: RootState) => state.user.clips);
-
-  const isCliped = clips.some((clip) => clip.url === article.url);
-
-  const onPressClip = () => {
-    if (isCliped) {
-      dispatch(deleteClip(article));
-    } else {
-      dispatch(addClip(article));
-    }
-  };
+  const { isCliped, toggleClip } = useClip(article);
 
   return (
     <>
-      <ClipButton onPress={onPressClip} enabled={isCliped} />
+      <ClipButton onPress={toggleClip} enabled={isCliped} />
       <WebView
         style={styles.container}
         source={{ uri: article.url }}

@@ -1,5 +1,7 @@
+import { AtomImage } from 'components/atoms/Image';
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { News } from 'utils/types';
 
 /**
  *
@@ -12,24 +14,17 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
  * @returns
  */
 
-interface News {
-  imageUrl: string;
-  title: string;
-  author: string;
-  onPress: () => void;
-}
-
-export const ListItem = (props: News) => {
+export const ListItem = ({ imageUrl, title, author, onPress }: News) => {
   return (
-    <TouchableOpacity style={styles.itemContainer} onPress={props.onPress}>
+    <TouchableOpacity style={styles.itemContainer} onPress={onPress}>
       <View style={styles.leftContainer}>
-        <Image style={styles.image} source={{ uri: props.imageUrl }} />
+        <AtomImage imageUrl={imageUrl} />
       </View>
       <View style={styles.rightContainer}>
         <Text numberOfLines={3} style={styles.text}>
-          {props.title}
+          {title}
         </Text>
-        <Text style={styles.subText}>{props.author}</Text>
+        <Text style={styles.subText}>{author}</Text>
       </View>
     </TouchableOpacity>
   );

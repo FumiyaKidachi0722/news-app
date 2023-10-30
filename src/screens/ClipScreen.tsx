@@ -1,38 +1,20 @@
-import { StackNavigationProp } from '@react-navigation/stack';
-import { ListItem } from 'components/ListItem';
+// src/screens/ClipScreen.tsx
+
+import { ListItem } from 'components/molecules/ListItem';
+import { useClips } from 'hooks/useClips';
+import { useNavigateToArticle } from 'hooks/useNavigateToArticle';
 import React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useSelector } from 'react-redux';
-import { RootState } from 'store';
+import { ClipScreenProps } from 'utils/types';
 
-interface Article {
-  author: string;
-  content: string | null;
-  description: string;
-  publishedAt: string;
-  source: {
-    id: string | null;
-    name: string;
-  };
-  title: string;
-  url: string;
-  urlToImage: string;
-}
-type RootStackParamList = {
-  Home?: undefined;
-  Article?: {
-    article: Article;
-  };
-};
-
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
-
-interface HomeScreenProps {
-  navigation: HomeScreenNavigationProp;
-}
-export const ClipScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
-  const clips = useSelector((state: RootState) => state.user.clips);
+/**
+ * クリップ画面
+ * @param navigation ナビゲーションプロップ
+ */
+export const ClipScreen: React.FC<ClipScreenProps> = () => {
+  const clips = useClips(); // カスタムフックを使用
+  const navigateToArticle = useNavigateToArticle();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -43,11 +25,7 @@ export const ClipScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             imageUrl={item.urlToImage}
             title={item.title}
             author={item.author}
-            onPress={() =>
-              navigation.navigate('Article', {
-                article: item,
-              })
-            }
+            onPress={() => navigateToArticle(item)}
           />
         )}
         keyExtractor={(item) => item.publishedAt}
